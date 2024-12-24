@@ -1,0 +1,8 @@
+yfinance==0.2.36
+pandas==2.2.0
+requests==2.31.0
+urllib3==2.1.0
+python-dotenv==1.0.0
+supabase==1.0.3
+fastapi==0.109.2
+uvicorn==0.27.1 

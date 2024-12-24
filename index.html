@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIST30 USD Stock Viewer</title>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        #stockSelector, .chart-type-btn {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .chart-type-btn {
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .chart-type-btn.active {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .chart-type-btn:hover {
+            background-color: #f0f0f0;
+        }
+        .chart-type-btn.active:hover {
+            background-color: #0056b3;
+        }
+        #chartContainer {
+            height: 600px;
+            width: 100%;
+            position: relative;
+        }
+        .price-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        .price-info div {
+            padding: 10px;
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .price-info h3 {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+        }
+        .price-info p {
+            margin: 5px 0 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .loading-overlay.active {
+            display: flex;
+        }
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-text {
+            position: absolute;
+            top: 60%;
+            font-size: 16px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="loading-overlay">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading historical data...</div>
+        </div>
+        <div class="header">
+            <h1>BIST30 USD Stock Viewer</h1>
+            <div class="controls">
+                <select id="stockSelector">
+                    <option value="">Select a stock</option>
+                </select>
+                <button id="candlestickBtn" class="chart-type-btn active">Candlestick</button>
+                <button id="lineBtn" class="chart-type-btn">Line</button>
+                <button id="volumeBtn">Volume</button>
+            </div>
+        </div>
+        <div id="chartContainer"></div>
+        <div class="price-info">
+            <div>
+                <h3>Current Price (USD)</h3>
+                <p id="currentPriceUSD">-</p>
+            </div>
+            <div>
+                <h3>Current Price (TRY)</h3>
+                <p id="currentPriceTRY">-</p>
+            </div>
+            <div>
+                <h3>Daily Change</h3>
+                <p id="dailyChange">-</p>
+            </div>
+            <div>
+                <h3>USD/TRY Rate</h3>
+                <p id="usdTryRate">-</p>
+            </div>
+        </div>
+    </div>
+    <script src="app.js?v=4"></script>
+</body>
+</html> 
